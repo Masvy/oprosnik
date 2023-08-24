@@ -6,7 +6,7 @@ import betterlogging as bl
 from aiogram import Bot, Dispatcher
 from sqlalchemy import URL
 
-from handlers import admin
+from handlers import admin, survey
 from database.create_table import BaseModel
 from database.engine import proceed_schemas
 from database.engine import create_async_engine, get_session_maker
@@ -40,6 +40,7 @@ async def main():
     dp.callback_query.middleware(RegisterCheck())
 
     dp.include_router(admin.admin_router)
+    dp.include_router(survey.survey_router)
 
     postgres_url = URL.create(
         'postgresql+asyncpg',
