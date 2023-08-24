@@ -14,6 +14,7 @@ from middlewares.register_check import RegisterCheck
 
 
 def setup_logging():
+    '''Функция конфигурации логирования'''
     log_level = logging.INFO
     bl.basic_colorized_config(level=log_level)
 
@@ -27,6 +28,14 @@ def setup_logging():
 
 
 async def main():
+    '''
+    Функция конфигурирования и запуска бота
+
+    Создал объекты бота и диспетчера
+    Зарегистрировал роутеры в диспетчере
+    Создал url для соединения с базой
+    Пропускаем накопившиеся апдейты и запускаем polling
+    '''
     setup_logging()
 
     env = Env()
