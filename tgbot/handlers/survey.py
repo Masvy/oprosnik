@@ -1,9 +1,11 @@
 from random import randint
 
-from aiogram import Router, F
+from environs import Env
+from aiogram import Router, F, types
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, or_f, and_f
 
+from filters.admin_filters import IsAdmin
 from lexicon.user_lexicon import TEST1
 from keyboards.inline_user import question1, question2, question3, \
                                   question4, question5, question6, \
@@ -12,13 +14,22 @@ from keyboards.inline_user import question1, question2, question3, \
 
 survey_router: Router = Router()
 
+env = Env()
+env.read_env()
 
+
+@survey_router.callback_query(F.data == 'start_survay_pressed')
 @survey_router.message(CommandStart())
-async def start_bot(message: Message):
+async def start_bot(update: types.Update):
     '''Хэндлер реагирует на команду /start для юзеров.'''
-    await message.answer(text=TEST1['name'])
-    await message.answer(text=TEST1['question1'],
-                         reply_markup=question1)
+    if isinstance(update, types.CallbackQuery):
+        await update.message.answer(text=TEST1['name'])
+        await update.message.answer(text=TEST1['question1'],
+                             reply_markup=question1)
+    if isinstance(update, types.Message):
+        await update.answer(text=TEST1['name'])
+        await update.answer(text=TEST1['question1'],
+                             reply_markup=question1)
 
 
 @survey_router.callback_query(F.data == 'question1_pressed1')
