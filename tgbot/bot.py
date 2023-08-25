@@ -11,6 +11,7 @@ from database.create_table import BaseModel
 from database.engine import proceed_schemas
 from database.engine import create_async_engine, get_session_maker
 from middlewares.register_check import RegisterCheck
+from keyboards.set_menu import set_main_menu
 
 
 def setup_logging():
@@ -44,6 +45,8 @@ async def main():
     bot: Bot = Bot(token=env('BOT_TOKEN'),
                    parse_mode='HTML')
     dp: Dispatcher = Dispatcher()
+
+    await set_main_menu(bot)
 
     dp.message.middleware(RegisterCheck())
     dp.callback_query.middleware(RegisterCheck())
