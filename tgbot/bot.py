@@ -2,9 +2,9 @@ import logging
 import asyncio
 
 from environs import Env
-import betterlogging as bl
 from aiogram import Bot, Dispatcher
 from sqlalchemy import URL
+import betterlogging as bl
 
 from handlers import admin, survey
 from database.create_table import BaseModel
@@ -12,6 +12,11 @@ from database.engine import proceed_schemas
 from database.engine import create_async_engine, get_session_maker
 from middlewares.register_check import RegisterCheck
 from keyboards.set_menu import set_main_menu
+
+
+class ErrorFilter(logging.Filter):
+    def filter(self, record):
+        return record.levelno == logging.ERROR
 
 
 def setup_logging():

@@ -10,6 +10,12 @@ admin_kb: InlineKeyboardMarkup = InlineKeyboardMarkup(
                                  callback_data='mailing_list_pressed'),
             InlineKeyboardButton(text=ADMIN_MENU['start_survay'],
                                  callback_data='start_survay_pressed')
+        ],
+        [
+            InlineKeyboardButton(text=ADMIN_MENU['statistics'],
+                                 callback_data='statistics_pressed'),
+            InlineKeyboardButton(text=ADMIN_MENU['show_users'],
+                                 callback_data='show_users_pressed')
         ]
     ]
 )
